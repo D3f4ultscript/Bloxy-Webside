@@ -35,13 +35,11 @@
         .info-card p { color: rgba(255,255,255,0.9); font-size: 1.1em; line-height: 1.6; }
         .server-info { background: rgba(255,255,255,0.2); backdrop-filter: blur(15px); border-radius: 20px; padding: 40px; text-align: center; max-width: 500px; margin: 0 auto; transition: transform 0.3s; }
         .server-info:hover { transform: translateY(-10px); }
-        .server-ip { font-size: 1.5em; color: rgba(255,255,255,0.9); margin-bottom: 20px; word-break: break-all; font-family: sans-serif; }
-        .server-port { font-size: 1.5em; color: rgba(255,255,255,0.9); font-family: sans-serif; }
         .discord-btn { display: inline-flex; align-items: center; justify-content: center; background: #5865f2; color: white; padding: 18px 40px; font-size: 1.3em; border-radius: 50px; text-decoration: none; margin-top: 20px; transition: all 0.3s; box-shadow: 0 10px 30px rgba(88,101,242,0.4); font-family: sans-serif; line-height: 1.2; }
         .discord-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(88,101,242,0.6); }
         .discord-icon { font-size: 1.5em; margin-right: 10px; }
-        .ip-btn { display: inline-flex; align-items: center; justify-content: center; background: #22c55e; color: white; padding: 14px 30px; font-size: 1.1em; border-radius: 50px; text-decoration: none; margin-bottom: 10px; border: none; cursor: pointer; transition: all 0.3s; box-shadow: 0 8px 20px rgba(34,197,94,0.4); }
-        .ip-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(34,197,94,0.6); }
+        .ip-btn { display: inline-flex; align-items: center; justify-content: center; background: #22c55e; color: white; padding: 18px 40px; font-size: 1.3em; border-radius: 50px; text-decoration: none; margin-bottom: 10px; border: none; cursor: pointer; transition: all 0.3s; box-shadow: 0 10px 30px rgba(34,197,94,0.4); font-family: sans-serif; line-height: 1.2; }
+        .ip-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(34,197,94,0.6); }
         .contributors-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 800px; margin: 0 auto; }
         .contributor { background: rgba(255,255,255,0.15); backdrop-filter: blur(15px); border-radius: 15px; padding: 25px; text-align: center; border: 1px solid rgba(255,255,255,0.2); transition: transform 0.3s; position: relative; }
         .contributor:hover { transform: translateY(-10px); }
@@ -118,7 +116,7 @@
         <div id="join" class="tab-content">
             <div class="server-info">
                 <button class="ip-btn" onclick="openIpModal()">
-                    <span data-de="IP & Port anzeigen" data-en="Show IP & Port">IP & Port anzeigen</span>
+                    <span data-de="Join Server" data-en="Join Server">Join Server</span>
                 </button>
                 <a href="https://discord.gg/HqFZXn9gEa" class="discord-btn" target="_blank">
                     <i class="fab fa-discord discord-icon"></i>
