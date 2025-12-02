@@ -8,32 +8,38 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; position: relative; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
         .header { text-align: center; color: white; margin-bottom: 40px; }
         .header h1 { font-size: 3em; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); margin-bottom: 10px; }
-        .lang-toggle { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: none; color: white; font-size: 1.2em; cursor: pointer; padding: 10px; border-radius: 10px; transition: all 0.3s; }
+
+        .lang-toggle { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: none; color: white; font-size: 1.2em; cursor: pointer; padding: 10px; border-radius: 10px; transition: all 0.3s; z-index: 1010; }
         .lang-toggle:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
-        .lang-dropdown { position: absolute; top: 50px; right: 20px; background: rgba(255,255,255,0.15); backdrop-filter: blur(15px); border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); min-width: 120px; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s; }
+        .lang-dropdown { position: absolute; top: 60px; right: 20px; background: rgba(255,255,255,0.15); backdrop-filter: blur(15px); border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); min-width: 120px; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s; z-index: 1020; }
         .lang-dropdown.active { opacity: 1; visibility: visible; transform: translateY(0); }
         .lang-option { display: block; padding: 12px 20px; color: white; text-decoration: none; transition: background 0.3s; }
         .lang-option:hover { background: rgba(255,255,255,0.2); }
         .lang-option.active { background: rgba(255,255,255,0.3); }
-        .tabs { display: flex; justify-content: center; align-items: center; margin-bottom: 40px; background: rgba(255,255,255,0.1); border-radius: 50px; padding: 5px; backdrop-filter: blur(10px); position: relative; }
+
+        .tabs { display: flex; justify-content: center; align-items: center; margin-bottom: 40px; background: rgba(255,255,255,0.1); border-radius: 50px; padding: 5px 80px 5px 5px; backdrop-filter: blur(10px); position: relative; }
         .tab-btn { background: none; border: none; padding: 15px 30px; color: white; font-size: 1.1em; cursor: pointer; border-radius: 50px; transition: all 0.3s; }
         .tab-btn.active { background: rgba(255,255,255,0.3); }
         .tab-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
-        .tiktok-btn { background: none; border: none; color: white; font-size: 1.5em; cursor: pointer; padding: 10px 20px; border-radius: 50px; transition: all 0.3s; position: absolute; right: 10px; }
-        .tiktok-btn:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
+
+        .social-buttons { position: absolute; right: 10px; display: flex; gap: 5px; }
+        .tiktok-btn, .youtube-btn { background: none; border: none; color: white; font-size: 1.5em; cursor: pointer; padding: 10px 12px; border-radius: 50px; transition: all 0.3s; }
+        .tiktok-btn:hover, .youtube-btn:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
+
         .tab-content { display: none; animation: fadeIn 0.5s; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
         .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 40px; }
         .info-card { background: rgba(255,255,255,0.15); backdrop-filter: blur(15px); border-radius: 20px; padding: 30px; text-align: center; border: 1px solid rgba(255,255,255,0.2); transition: transform 0.3s; }
         .info-card:hover { transform: translateY(-10px); }
-        .info-card[onclick] { cursor: pointer; }
         .info-icon { font-size: 3em; color: #4ade80; margin-bottom: 20px; }
         .info-card h3 { color: white; font-size: 1.8em; margin-bottom: 15px; }
         .info-card p { color: rgba(255,255,255,0.9); font-size: 1.1em; line-height: 1.6; }
+
         .server-info { background: rgba(255,255,255,0.2); backdrop-filter: blur(15px); border-radius: 20px; padding: 40px; text-align: center; max-width: 500px; margin: 0 auto; transition: transform 0.3s; }
         .server-info:hover { transform: translateY(-10px); }
         .discord-btn { display: inline-flex; align-items: center; justify-content: center; background: #5865f2; color: white; padding: 18px 40px; font-size: 1.3em; border-radius: 50px; text-decoration: none; margin-top: 20px; transition: all 0.3s; box-shadow: 0 10px 30px rgba(88,101,242,0.4); font-family: sans-serif; line-height: 1.2; }
@@ -41,11 +47,14 @@
         .discord-icon { font-size: 1.5em; margin-right: 10px; }
         .ip-btn { display: inline-flex; align-items: center; justify-content: center; background: #22c55e; color: white; padding: 18px 40px; font-size: 1.3em; border-radius: 50px; text-decoration: none; margin-bottom: 10px; border: none; cursor: pointer; transition: all 0.3s; box-shadow: 0 10px 30px rgba(34,197,94,0.4); font-family: sans-serif; line-height: 1.2; }
         .ip-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(34,197,94,0.6); }
+
         .contributors-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 800px; margin: 0 auto; }
         .contributor { background: rgba(255,255,255,0.15); backdrop-filter: blur(15px); border-radius: 15px; padding: 25px; text-align: center; border: 1px solid rgba(255,255,255,0.2); transition: transform 0.3s; position: relative; }
         .contributor:hover { transform: translateY(-10px); }
         .contributor h4 { color: white; font-size: 1.4em; margin-bottom: 10px; }
         .contributor p { color: rgba(255,255,255,0.9); font-size: 1.2em; margin: 3px 0; }
+
+        .help-box { background: rgba(255,255,255,0.15); backdrop-filter: blur(15px); border-radius: 20px; padding: 40px; text-align: center; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.9); max-width: 600px; margin: 0 auto; font-size: 1.2em; }
 
         .modal-backdrop { display: none; position: fixed; z-index: 1000; inset: 0; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; }
         .modal-backdrop.active { display: flex; }
@@ -56,9 +65,9 @@
         .modal-close:hover { background: rgba(148,163,184,0.7); }
 
         @media (max-width: 768px) {
-            .tabs { flex-direction: column; align-items: center; }
+            .tabs { flex-direction: column; align-items: center; padding-right: 5px; }
             .tab-btn { width: 100%; max-width: 300px; margin: 5px 0; }
-            .tiktok-btn { position: static; margin-top: 10px; }
+            .social-buttons { position: static; margin-top: 10px; }
             .lang-toggle { position: static; margin: 0 auto 20px; }
             .lang-dropdown { position: static; margin-top: 10px; }
             .info-grid { grid-template-columns: 1fr; }
@@ -67,7 +76,7 @@
 </head>
 <body>
     <div class="container">
-        <button class="lang-toggle" onclick="toggleLangDropdown()" aria-label="Sprache wechseln">
+        <button class="lang-toggle" onclick="toggleLangDropdown()">
             <i class="fas fa-globe"></i>
         </button>
         <div id="langDropdown" class="lang-dropdown">
@@ -80,12 +89,19 @@
         </div>
         
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('infos', event)"><i class="fas fa-info-circle"></i> <span data-de="Infos" data-en="Info">Infos</span></button>
-            <button class="tab-btn" onclick="switchTab('join', event)"><i class="fas fa-play-circle"></i> <span data-de="Join" data-en="Join">Join</span></button>
-            <button class="tab-btn" onclick="switchTab('contributors', event)"><i class="fas fa-users-cog"></i> <span data-de="Contributors" data-en="Team">Contributors</span></button>
-            <button class="tiktok-btn" onclick="window.open('https://www.tiktok.com/@bloxymc.net', '_blank')">
-                <i class="fab fa-tiktok"></i>
-            </button>
+            <button class="tab-btn active" onclick="switchTab('infos')"><i class="fas fa-info-circle"></i> <span data-de="Infos" data-en="Info">Infos</span></button>
+            <button class="tab-btn" onclick="switchTab('join')"><i class="fas fa-play-circle"></i> <span data-de="Join" data-en="Join">Join</span></button>
+            <button class="tab-btn" onclick="switchTab('contributors')"><i class="fas fa-users-cog"></i> <span data-de="Contributors" data-en="Team">Contributors</span></button>
+            <button class="tab-btn" onclick="switchTab('help')"><i class="fas fa-question-circle"></i> <span data-de="Hilfe" data-en="Help">Hilfe</span></button>
+
+            <div class="social-buttons">
+                <button class="tiktok-btn" onclick="window.open('https://www.tiktok.com/@bloxymc.net', '_blank')">
+                    <i class="fab fa-tiktok"></i>
+                </button>
+                <button class="youtube-btn" onclick="window.open('https://youtube.com/@LeonHDone', '_blank')">
+                    <i class="fab fa-youtube"></i>
+                </button>
+            </div>
         </div>
         
         <div id="infos" class="tab-content active">
@@ -104,7 +120,7 @@
                     <h3 data-de="Community" data-en="Community">Community</h3>
                     <p data-de="Treffe Spieler auf unserem Discord Server! Hier kannst du reden, schreiben und Freunde finden." data-en="Meet players on our Discord Server! Chat, write and make friends here.">Treffe Spieler auf unserem Discord Server! Hier kannst du reden, schreiben und Freunde finden.</p>
                 </div>
-                <div class="info-card" onclick="window.open('https://modrinth.com/plugin/simple-voice-chat/versions', '_blank')">
+                <div class="info-card">
                     <div class="info-icon">
                         <i class="fas fa-microphone"></i>
                     </div>
@@ -147,6 +163,12 @@
                 </div>
             </div>
         </div>
+
+        <div id="help" class="tab-content">
+            <div class="help-box">
+                <span data-de="Nichts..." data-en="Nothing yet...">Nichts...</span>
+            </div>
+        </div>
     </div>
 
     <div id="ipModal" class="modal-backdrop">
@@ -161,15 +183,16 @@
     <script>
         let currentLang = 'de';
         
-        function switchTab(tabName, event) {
+        function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(tabName).classList.add('active');
-            event.currentTarget.classList.add('active');
+            event.target.closest('.tab-btn').classList.add('active');
         }
         
         function toggleLangDropdown() {
-            document.getElementById('langDropdown').classList.toggle('active');
+            const dropdown = document.getElementById('langDropdown');
+            dropdown.classList.toggle('active');
         }
         
         function setLanguage(lang) {
@@ -220,4 +243,3 @@
     </script>
 </body>
 </html>
-
