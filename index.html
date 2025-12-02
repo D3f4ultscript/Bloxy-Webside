@@ -1,222 +1,328 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bloxymc - Minecraft Server</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; position: relative; }
-        .header { text-align: center; color: white; margin-bottom: 40px; }
-        .header h1 { font-size: 3em; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); margin-bottom: 10px; }
-        .lang-toggle { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: none; color: white; font-size: 1.2em; cursor: pointer; padding: 10px; border-radius: 10px; transition: all 0.3s; }
-        .lang-toggle:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
-        .lang-dropdown { position: absolute; top: 50px; right: 20px; background: rgba(255,255,255,0.15); backdrop-filter: blur(15px); border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); min-width: 120px; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s; }
-        .lang-dropdown.active { opacity: 1; visibility: visible; transform: translateY(0); }
-        .lang-option { display: block; padding: 12px 20px; color: white; text-decoration: none; transition: background 0.3s; }
-        .lang-option:hover { background: rgba(255,255,255,0.2); }
-        .lang-option.active { background: rgba(255,255,255,0.3); }
-        .tabs { display: flex; justify-content: center; align-items: center; margin-bottom: 40px; background: rgba(255,255,255,0.1); border-radius: 50px; padding: 5px; backdrop-filter: blur(10px); position: relative; }
-        .tab-btn { background: none; border: none; padding: 15px 30px; color: white; font-size: 1.1em; cursor: pointer; border-radius: 50px; transition: all 0.3s; }
-        .tab-btn.active { background: rgba(255,255,255,0.3); }
-        .tab-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
-        .tiktok-btn { background: none; border: none; color: white; font-size: 1.5em; cursor: pointer; padding: 10px 20px; border-radius: 50px; transition: all 0.3s; position: absolute; right: 10px; }
-        .tiktok-btn:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
-        .tab-content { display: none; animation: fadeIn 0.5s; }
-        .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 40px; }
-        .info-card { background: rgba(255,255,255,0.15); backdrop-filter: blur(15px); border-radius: 20px; padding: 30px; text-align: center; border: 1px solid rgba(255,255,255,0.2); transition: transform 0.3s; }
-        .info-card:hover { transform: translateY(-10px); }
-        .info-card[onclick] { cursor: pointer; }
-        .info-icon { font-size: 3em; color: #4ade80; margin-bottom: 20px; }
-        .info-card h3 { color: white; font-size: 1.8em; margin-bottom: 15px; }
-        .info-card p { color: rgba(255,255,255,0.9); font-size: 1.1em; line-height: 1.6; }
-        .server-info { background: rgba(255,255,255,0.2); backdrop-filter: blur(15px); border-radius: 20px; padding: 40px; text-align: center; max-width: 500px; margin: 0 auto; transition: transform 0.3s; }
-        .server-info:hover { transform: translateY(-10px); }
-        .discord-btn { display: inline-flex; align-items: center; justify-content: center; background: #5865f2; color: white; padding: 18px 40px; font-size: 1.3em; border-radius: 50px; text-decoration: none; margin-top: 20px; transition: all 0.3s; box-shadow: 0 10px 30px rgba(88,101,242,0.4); font-family: sans-serif; line-height: 1.2; }
-        .discord-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(88,101,242,0.6); }
-        .discord-icon { font-size: 1.5em; margin-right: 10px; }
-        .ip-btn { display: inline-flex; align-items: center; justify-content: center; background: #22c55e; color: white; padding: 18px 40px; font-size: 1.3em; border-radius: 50px; text-decoration: none; margin-bottom: 10px; border: none; cursor: pointer; transition: all 0.3s; box-shadow: 0 10px 30px rgba(34,197,94,0.4); font-family: sans-serif; line-height: 1.2; }
-        .ip-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(34,197,94,0.6); }
-        .contributors-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 800px; margin: 0 auto; }
-        .contributor { background: rgba(255,255,255,0.15); backdrop-filter: blur(15px); border-radius: 15px; padding: 25px; text-align: center; border: 1px solid rgba(255,255,255,0.2); transition: transform 0.3s; position: relative; }
-        .contributor:hover { transform: translateY(-10px); }
-        .contributor h4 { color: white; font-size: 1.4em; margin-bottom: 10px; }
-        .contributor p { color: rgba(255,255,255,0.9); font-size: 1.2em; margin: 3px 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MinePerfect Server</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-        .modal-backdrop { display: none; position: fixed; z-index: 1000; inset: 0; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; }
-        .modal-backdrop.active { display: flex; }
-        .modal { background: rgba(30,41,59,0.95); padding: 25px 30px; border-radius: 15px; max-width: 320px; width: 90%; color: white; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-        .modal h3 { margin-bottom: 15px; font-size: 1.4em; }
-        .modal p { margin: 6px 0; font-size: 1.1em; }
-        .modal-close { margin-top: 18px; padding: 8px 20px; border-radius: 999px; border: none; background: rgba(148,163,184,0.4); color: white; cursor: pointer; font-size: 0.95em; }
-        .modal-close:hover { background: rgba(148,163,184,0.7); }
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background: url('https://cdn.discordapp.com/attachments/1180261738159861780/1309894502926739516/image.png?ex=67144420&is=6712f2a0&hm=91a5d325ac5b9379e36f4c84e69ae807fa6a3b96fc4611a8104db21687b1bbb6&') no-repeat center center/cover;
+        background-attachment: fixed;
+        color: white;
+    }
 
-        @media (max-width: 768px) {
-            .tabs { flex-direction: column; align-items: center; }
-            .tab-btn { width: 100%; max-width: 300px; margin: 5px 0; }
-            .tiktok-btn { position: static; margin-top: 10px; }
-            .lang-toggle { position: static; margin: 0 auto 20px; }
-            .lang-dropdown { position: static; margin-top: 10px; }
-            .info-grid { grid-template-columns: 1fr; }
+    .header {
+        background: rgba(0, 0, 0, 0.35);
+        padding: 20px;
+        text-align: center;
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    h1 {
+        margin: 0;
+        font-size: 2.5em;
+        font-weight: 700;
+    }
+
+    /* TikTok Button */
+    .tiktok-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: #ff0050;
+        padding: 12px 18px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: bold;
+        color: white;
+        box-shadow: 0 0 12px rgba(255, 0, 80, 0.6);
+        transition: 0.2s ease;
+    }
+
+    .tiktok-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 20px rgba(255, 0, 80, 0.9);
+    }
+
+    .content {
+        margin: 40px auto;
+        width: 90%;
+        max-width: 900px;
+        background: rgba(0,0,0,0.45);
+        padding: 20px;
+        border-radius: 15px;
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .tab-btn {
+        flex: 1;
+        text-align: center;
+        padding: 12px;
+        background: rgba(255,255,255,0.15);
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+    .tab-btn.active {
+        background: rgba(255,255,255,0.35);
+        font-weight: bold;
+    }
+
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    /* Info Cards */
+    .info-grid {
+        display: grid;
+        gap: 15px;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .info-card {
+        background: rgba(255,255,255,0.15);
+        padding: 20px;
+        border-radius: 12px;
+        backdrop-filter: blur(6px);
+        border: 1px solid rgba(255,255,255,0.2);
+        transition: 0.2s ease;
+    }
+
+    .info-card[onclick] {
+        cursor: pointer;
+    }
+
+    .info-card:hover {
+        transform: scale(1.03);
+        background: rgba(255,255,255,0.25);
+    }
+
+    .info-icon {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .info-icon i, .info-icon img {
+        font-size: 40px;
+        width: 40px;
+        height: 40px;
+    }
+
+    /* Language Dropdown */
+    .lang-toggle {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: rgba(255,255,255,0.2);
+        padding: 10px 15px;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .lang-dropdown {
+        position: absolute;
+        top: 60px;
+        left: 20px;
+        background: rgba(0,0,0,0.5);
+        backdrop-filter: blur(10px);
+        padding: 10px;
+        border-radius: 10px;
+        display: none;
+        border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .lang-option {
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+    .lang-option:hover {
+        background: rgba(255,255,255,0.2);
+    }
+
+    /* IP Modal */
+    .modal-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.6);
+        display: none;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-box {
+        background: rgba(255,255,255,0.15);
+        padding: 25px;
+        border-radius: 12px;
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255,255,255,0.2);
+        text-align: center;
+    }
+
+    @media (max-width: 768px) {
+        .tiktok-btn {
+            position: static;
+            display: block;
+            text-align: center;
+            margin-bottom: 20px;
         }
-    </style>
+    }
+</style>
 </head>
+
 <body>
-    <div class="container">
-        <button class="lang-toggle" onclick="toggleLangDropdown()" aria-label="Sprache wechseln">
-            <i class="fas fa-globe"></i>
-        </button>
-        <div id="langDropdown" class="lang-dropdown">
-            <a href="#" class="lang-option active" data-lang="de">Deutsch</a>
-            <a href="#" class="lang-option" data-lang="en">English</a>
-        </div>
 
-        <div class="header">
-            <h1><i class="fas fa-cube"></i> Bloxymc</h1>
-        </div>
-        
-        <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('infos', event)"><i class="fas fa-info-circle"></i> <span data-de="Infos" data-en="Info">Infos</span></button>
-            <button class="tab-btn" onclick="switchTab('join', event)"><i class="fas fa-play-circle"></i> <span data-de="Join" data-en="Join">Join</span></button>
-            <button class="tab-btn" onclick="switchTab('contributors', event)"><i class="fas fa-users-cog"></i> <span data-de="Contributors" data-en="Team">Contributors</span></button>
-            <button class="tiktok-btn" onclick="window.open('https://www.tiktok.com/@bloxymc.net', '_blank')">
-                <i class="fab fa-tiktok"></i>
-            </button>
-        </div>
-        
-        <div id="infos" class="tab-content active">
-            <div class="info-grid">
-                <div class="info-card">
-                    <div class="info-icon">
-                        <i class="fas fa-server"></i>
-                    </div>
-                    <h3 data-de="Server" data-en="Server">Server</h3>
-                    <p data-de="Ein Survival Server mit Shop- und Sell Systemen und vielem mehr. Hier kannst du kämpfen, farmen und bauen." data-en="A Survival Server with shop and sell systems and much more. Fight, farm and build here.">Ein Survival Server mit Shop- und Sell Systemen und vielem mehr. Hier kannst du kämpfen, farmen und bauen.</p>
-                </div>
-                <div class="info-card">
-                    <div class="info-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3 data-de="Community" data-en="Community">Community</h3>
-                    <p data-de="Treffe Spieler auf unserem Discord Server! Hier kannst du reden, schreiben und Freunde finden." data-en="Meet players on our Discord Server! Chat, write and make friends here.">Treffe Spieler auf unserem Discord Server! Hier kannst du reden, schreiben und Freunde finden.</p>
-                </div>
-                <div class="info-card" onclick="window.open('https://modrinth.com/plugin/simple-voice-chat/versions', '_blank')">
-                    <div class="info-icon">
-                        <i class="fas fa-microphone"></i>
-                    </div>
-                    <h3 data-de="Mods" data-en="Mods">Mods</h3>
-                    <p data-de="Voice Chat Mod erforderlich! Kommuniziere mit anderen Spielern über Sprachchat während des Spielens." data-en="Voice Chat Mod required! Communicate with other players via voice chat.">Voice Chat Mod erforderlich! Kommuniziere mit anderen Spielern über Sprachchat während des Spielens.</p>
-                </div>
-            </div>
-        </div>
-        
-        <div id="join" class="tab-content">
-            <div class="server-info">
-                <button class="ip-btn" onclick="openIpModal()">
-                    <span data-de="Join Server" data-en="Join Server">Join Server</span>
-                </button>
-                <a href="https://discord.gg/HqFZXn9gEa" class="discord-btn" target="_blank">
-                    <i class="fab fa-discord discord-icon"></i>
-                    <span data-de="Discord Joinen" data-en="Join Discord">Discord Joinen</span>
-                </a>
-            </div>
-        </div>
+<a class="tiktok-btn" href="https://www.tiktok.com/@mineperfect" target="_blank">TikTok</a>
 
-        <div id="contributors" class="tab-content">
-            <div class="contributors-grid">
-                <div class="contributor">
-                    <h4 data-de="Owner" data-en="Owner">Owner</h4>
-                    <p>DevDesert</p>
-                </div>
-                <div class="contributor">
-                    <h4 data-de="Head Developer" data-en="Head Developer">Head Developer</h4>
-                    <p>D3f4ult</p>
-                </div>
-                <div class="contributor">
-                    <h4 data-de="Moderator" data-en="Moderator">Moderator</h4>
-                    <p>Fynn</p>
-                </div>
-                <div class="contributor">
-                    <h4 data-de="Support" data-en="Support">Support</h4>
-                    <p>Bastnik</p>
-                    <p>Carsten</p>
-                </div>
+<button class="lang-toggle" onclick="toggleLangDropdown()">🌍</button>
+<div class="lang-dropdown" id="langMenu">
+    <div class="lang-option" onclick="switchLanguage('de')">Deutsch</div>
+    <div class="lang-option" onclick="switchLanguage('en')">English</div>
+</div>
+
+<div class="header">
+    <h1 data-de="MinePerfect Server" data-en="MinePerfect Server">MinePerfect Server</h1>
+</div>
+
+<div class="content">
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('infos', event)">Infos</button>
+        <button class="tab-btn" onclick="switchTab('regeln', event)">Regeln</button>
+        <button class="tab-btn" onclick="switchTab('team', event)">Team</button>
+    </div>
+
+    <!-- TAB: INFOS -->
+    <div class="tab-content active" id="infos">
+
+        <div class="info-grid">
+
+            <!-- SERVER CARD -->
+            <div class="info-card" onclick="openIP()">
+                <div class="info-icon"><i class="fas fa-server"></i></div>
+                <h3 data-de="Server IP" data-en="Server IP">Server IP</h3>
+                <p data-de="Klicke hier, um die IP-Adresse des Servers zu sehen!"
+                   data-en="Click here to see the server IP!">
+                   Klicke hier, um die IP-Adresse des Servers zu sehen!
+                </p>
             </div>
+
+            <!-- COMMUNITY (HILFE + VIDEO) -->
+            <div class="info-card" onclick="window.open('https://youtu.be/mlYmRvNzd5w','_blank')">
+                <div class="info-icon">
+                    <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png"
+                         style="filter: hue-rotate(80deg) brightness(1.4);">
+                </div>
+
+                <h3 data-de="Hilfe & Community" data-en="Help & Community">Hilfe & Community</h3>
+                <p data-de="Hier bekommst du Hilfe zur Installation des Mods 'Simple Voice Chat'. Eine Schritt-für-Schritt Anleitung findest du im Video. Natürlich helfen wir dir auch jederzeit auf unserem Discord weiter!"
+                   data-en="Here you get help installing the 'Simple Voice Chat' mod. A full step-by-step guide is in the video. You can also get help anytime on our Discord!">
+                   Hier bekommst du Hilfe zur Installation des Mods 'Simple Voice Chat'. Eine Schritt-für-Schritt Anleitung findest du im Video. Natürlich helfen wir dir auch jederzeit auf unserem Discord weiter!
+                </p>
+            </div>
+
+            <!-- MODS CARD -->
+            <div class="info-card" onclick="window.open('https://modrinth.com/plugin/simple-voice-chat/versions', '_blank')">
+                <div class="info-icon"><i class="fas fa-microphone"></i></div>
+                <h3 data-de="Mods" data-en="Mods">Mods</h3>
+                <p data-de="Voice Chat Mod erforderlich! Klicke hier, um ihn herunterzuladen."
+                   data-en="Voice Chat Mod required! Click here to download it.">
+                   Voice Chat Mod erforderlich! Klicke hier, um ihn herunterzuladen.
+                </p>
+            </div>
+
         </div>
     </div>
 
-    <div id="ipModal" class="modal-backdrop">
-        <div class="modal">
-            <h3 data-de="Serverdaten" data-en="Server Details">Serverdaten</h3>
-            <p><strong>IP:</strong> Bloxymc.de</p>
-            <p><strong>Port:</strong> 24454</p>
-            <button class="modal-close" onclick="closeIpModal()">OK</button>
-        </div>
+    <!-- TAB: REGELN -->
+    <div class="tab-content" id="regeln">
+        <h2 data-de="Regeln" data-en="Rules">Regeln</h2>
+        <p data-de="Hier stehen bald die Serverregeln." data-en="Server rules will appear soon.">
+            Hier stehen bald die Serverregeln.
+        </p>
     </div>
 
-    <script>
-        let currentLang = 'de';
-        
-        function switchTab(tabName, event) {
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(tabName).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
-        
-        function toggleLangDropdown() {
-            document.getElementById('langDropdown').classList.toggle('active');
-        }
-        
-        function setLanguage(lang) {
-            currentLang = lang;
-            document.querySelectorAll('[data-de]').forEach(el => {
-                el.textContent = el.getAttribute('data-' + lang);
-            });
-            
-            document.querySelectorAll('.lang-option').forEach(option => {
-                option.classList.remove('active');
-                if (option.getAttribute('data-lang') === lang) {
-                    option.classList.add('active');
-                }
-            });
-            
-            document.documentElement.lang = lang;
-            toggleLangDropdown();
-        }
-        
-        document.querySelectorAll('.lang-option').forEach(option => {
-            option.addEventListener('click', (e) => {
-                e.preventDefault();
-                setLanguage(option.getAttribute('data-lang'));
-            });
-        });
-        
-        document.addEventListener('click', (e) => {
-            const toggle = document.querySelector('.lang-toggle');
-            const dropdown = document.getElementById('langDropdown');
-            if (!toggle.contains(e.target) && !dropdown.contains(e.target)) {
-                dropdown.classList.remove('active');
-            }
-        });
+    <!-- TAB: TEAM -->
+    <div class="tab-content" id="team">
+        <h2 data-de="Team" data-en="Team">Team</h2>
+        <p data-de="Das Team wird bald hier angezeigt."
+           data-en="The team will be shown here soon.">
+           Das Team wird bald hier angezeigt.
+        </p>
+    </div>
 
-        function openIpModal() {
-            document.getElementById('ipModal').classList.add('active');
-        }
+</div>
 
-        function closeIpModal() {
-            document.getElementById('ipModal').classList.remove('active');
-        }
+<!-- SERVER IP MODAL -->
+<div class="modal-bg" id="ipModal" onclick="closeIP(event)">
+    <div class="modal-box">
+        <h2>Server IP</h2>
+        <p style="font-size: 20px; font-weight: bold;">MinePerfect.aternos.me</p>
+    </div>
+</div>
 
-        document.getElementById('ipModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeIpModal();
-            }
-        });
-    </script>
+<script>
+function switchTab(tabName, event) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.getElementById(tabName).classList.add('active');
+
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+}
+
+/* LANG MENU */
+function toggleLangDropdown() {
+    document.getElementById("langMenu").style.display =
+        document.getElementById("langMenu").style.display === "block" ? "none" : "block";
+}
+
+window.onclick = function(event) {
+    const menu = document.getElementById("langMenu");
+    if (!event.target.closest('.lang-toggle') && !event.target.closest('.lang-dropdown')) {
+        menu.style.display = "none";
+    }
+}
+
+/* LANGUAGE SWITCHER */
+function switchLanguage(lang) {
+    document.querySelectorAll("[data-" + lang + "]").forEach(el => {
+        el.textContent = el.getAttribute("data-" + lang);
+    });
+    document.documentElement.lang = lang;
+    document.getElementById("langMenu").style.display = "none";
+}
+
+/* IP MODAL */
+function openIP() {
+    document.getElementById("ipModal").style.display = "flex";
+}
+
+function closeIP(e) {
+    if (e.target.id === "ipModal") {
+        document.getElementById("ipModal").style.display = "none";
+    }
+}
+</script>
+
 </body>
 </html>
