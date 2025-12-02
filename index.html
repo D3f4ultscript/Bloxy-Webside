@@ -54,7 +54,16 @@
         .contributor h4 { color: white; font-size: 1.4em; margin-bottom: 10px; }
         .contributor p { color: rgba(255,255,255,0.9); font-size: 1.2em; margin: 3px 0; }
 
-        .help-box { background: rgba(255,255,255,0.15); backdrop-filter: blur(15px); border-radius: 20px; padding: 40px; text-align: center; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.9); max-width: 600px; margin: 0 auto; font-size: 1.2em; }
+        .help-card { background: rgba(255,255,255,0.15); backdrop-filter: blur(15px); border-radius: 20px; padding: 20px; text-align: left; border: 1px solid rgba(255,255,255,0.2); max-width: 700px; margin: 0 auto; color: white; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
+        .help-card:hover { transform: translateY(-8px); box-shadow: 0 18px 35px rgba(0,0,0,0.35); }
+        .help-thumb-wrapper { position: relative; border-radius: 15px; overflow: hidden; margin-bottom: 15px; }
+        .help-thumb { width: 100%; display: block; }
+        .help-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+        .help-play-icon { font-size: 3em; color: rgba(255,255,255,0.9); text-shadow: 0 4px 10px rgba(0,0,0,0.7); }
+
+        .help-title { font-size: 1.3em; margin-bottom: 8px; }
+        .help-meta { font-size: 0.9em; opacity: 0.85; margin-bottom: 8px; }
+        .help-desc { font-size: 1em; opacity: 0.9; }
 
         .modal-backdrop { display: none; position: fixed; z-index: 1000; inset: 0; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; }
         .modal-backdrop.active { display: flex; }
@@ -165,8 +174,18 @@
         </div>
 
         <div id="help" class="tab-content">
-            <div class="help-box">
-                <span data-de="Nichts..." data-en="Nothing yet...">Nichts...</span>
+            <div class="help-card" onclick="window.open('https://youtu.be/mlYmRvNzd5w', '_blank')">
+                <div class="help-thumb-wrapper">
+                    <img class="help-thumb" src="https://img.youtube.com/vi/mlYmRvNzd5w/maxresdefault.jpg" alt="YouTube Video Thumbnail">
+                    <div class="help-play">
+                        <i class="fas fa-play-circle help-play-icon"></i>
+                    </div>
+                </div>
+                <div class="help-title">Bloxymc Server Hilfe</div>
+                <div class="help-meta">YouTube • Tutorial</div>
+                <div class="help-desc">
+                    Grundlagen, Joinen und erste Schritte auf dem Bloxymc Server.
+                </div>
             </div>
         </div>
     </div>
